@@ -8,10 +8,10 @@ class Users(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(120))
 
-log_food = db.Table('log_food',
-    db.Column('log_id', db.Integer, db.ForeignKey('log.id'), primary_key=True),
-    db.Column('food_id', db.Integer, db.ForeignKey('food.id'), primary_key=True)
-)
+# log_food = db.Table('log_food',
+#     db.Column('log_id', db.Integer, db.ForeignKey('log.id'), primary_key=True),
+#     db.Column('food_id', db.Integer, db.ForeignKey('food.id'), primary_key=True)
+# )
 
 class Alimenti(db.Model):
     __tablename__ = "Alimenti"
@@ -25,8 +25,8 @@ class Alimenti(db.Model):
     def calories(self):
         return self.proteins * 4 + self.carbs * 4 + self.fats * 9
 
-class Log(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.Date, nullable=False)
-    foods = db.relationship('Alimenti', secondary=log_food, lazy='dynamic')
+# class Log(db.Model):
+#     id = db.Column(db.Integer, primary_key=True)
+#     date = db.Column(db.Date, nullable=False)
+#     foods = db.relationship('Alimenti', secondary=log_food, lazy='dynamic')
 

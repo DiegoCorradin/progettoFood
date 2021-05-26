@@ -1,7 +1,5 @@
 from os import path
 from flask import Flask, render_template, redirect
-from flask.helpers import url_for
-from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from database.db import initialize_db, db
 from flask_wtf import FlaskForm
@@ -10,6 +8,7 @@ from wtforms.validators import InputRequired, Email, Length
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_manager, LoginManager, login_user, login_required, logout_user, current_user
 from database.models import Users
+from main.routes import main
 
 app = Flask(__name__)
 DB_NAME = 'alimentazione.db'
@@ -20,6 +19,7 @@ Bootstrap(app)
 #db = SQLAlchemy(app)
 initialize_db(app)
 
+app.register_blueprint(main)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -31,15 +31,11 @@ def load_user(user_id):
 
 
 
-@app.route("/")
-def index():
-    return render_template("layout.html")
-
-
 @app.route('/dashboard', methods=["GET"])
 @login_required
 def dashboard():
     return render_template("dashboard.html", name=current_user.username)
+
 
 class LoginForm(FlaskForm):
     username = StringField(
@@ -112,3 +108,5 @@ if __name__ == '__main__':
         
     app.run(debug=True)
     
+
+## https://www.youtube.com/watch?v=0ROCLcU42Jc&ab_channel=PrettyPrinted, https://www.educative.io/edpresso/how-to-add-data-to-databases-in-flask
