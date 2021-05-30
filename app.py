@@ -7,7 +7,7 @@ from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_manager, LoginManager, login_user, login_required, logout_user, current_user
-from database.models import Users
+from database.models import Users, Log
 from main.routes import main
 
 app = Flask(__name__)
@@ -34,8 +34,37 @@ def load_user(user_id):
 @app.route('/dashboard', methods=["GET"])
 @login_required
 def dashboard():
-    return render_template("dashboard.html", name=current_user.username)
+    
+    logs = Log.query.order_by(Log.date.desc()).all()
 
+    log_dates = []
+
+    for log in logs:
+        proteins = 0
+        carbs = 0
+        fats = 0
+        calories = 0
+
+        for food in log.foods:
+            proteins += food.proteins
+            carbs += food.carbs 
+            fats += food.fats
+            calories += food.calories
+
+        log_dates.append({
+            'log_date' : log,
+            'proteins' : proteins,
+            'carbs' : carbs,
+            'fats' : fats,
+            'calories' : calories
+        })    
+
+    return render_template("dashboard.html", name=current_user.username, log_dates=log_dates)
+
+
+@app.route('/add', methods=['GET', 'POST'])
+def add():
+    return render_template('add.html')
 
 class LoginForm(FlaskForm):
     username = StringField(

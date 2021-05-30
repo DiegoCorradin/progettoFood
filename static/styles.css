@@ -10,7 +10,6 @@ body {
 	position: relative;
 	min-height: 180px;
 	background: rgba(44, 62, 80, .8);
-	background-image: url('./img/bg.jpg');
 	background-size: cover;
 	background-repeat: no-repeat;
 	border-bottom: 2px solid rgba(44, 62, 80, .8);

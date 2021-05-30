@@ -6,11 +6,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Food Tracker | Add Food Item</title>
 
-		<link href="https://fonts.googleapis.com/css?family=Oswald|Ubuntu:400,700" rel="stylesheet">
-
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="./bs/css/united.min.css" />
-		<link rel="stylesheet" href="./styles.css" />
+		<link rel="stylesheet" href="/static/united.min.css" />
+		<link rel="stylesheet" href="/static/styles.css" />
 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -34,7 +32,7 @@
 						<div class="col-lg-4 col-lg-offset-4">
 							<ul class="nav nav-pills nav-justified">
 							  <li role="presentation">
-							  	<a href="./" title="Home">Home</a>
+							  	<a href="{{ url_for('dashboard') }}" title="Home">Home</a>
 							  </li>
 							  <li role="presentation" class="active">
 							  	<a href="./add.html" title="Add Food Item">Add Food Item</a>
@@ -50,46 +48,46 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<h3 class="lean-h text-black">
-								<i class="glyphicon glyphicon-plus-sign"></i> New Food Form
+								<i></i> New Food Form
 							</h3>
 							<hr />
 
-							<form action="" method="POST" role="form">
+							<form action="{{ url_for('main.add') }}" method="POST" role="form">
 							
 								<div class="row">
 									<div class="col-lg-4">
 										<div class="form-group">
 											<label for="food-name">Food Name</label>
-						                  	<input type="text" class="form-control" id="food-name" name="food-name" placeholder="Food Name" autofocus>
+						                  	<input type="text" class="form-control" id="food-name" name="food-name" placeholder="Food Name" value="{{ food.name }}" autofocus>
 										</div>
 									</div>
 									<div class="col-lg-4">
 										<div class="form-group">
 						                  <label for="protein">Protein</label>
-						                  <input type="number" class="form-control" id="protein" name="protein" placeholder="Protein">
+						                  <input type="number" class="form-control" id="protein" name="protein" placeholder="Protein" value="{{ food.proteins }}">
 						                </div>
 									</div>
 									<div class="col-lg-4">
 										<div class="form-group">
 						                  <label for="carbohydrates">Carbohydrates</label>
-						                  <input type="number" class="form-control" id="carbohydrates" name="carbohydrates" placeholder="Carbohydrates">
+						                  <input type="number" class="form-control" id="carbohydrates" name="carbohydrates" placeholder="Carbohydrates" value="{{ food.carbs }}">
 						                </div>
 									</div>
 								</div>
-
 								<div class="row">
 									<div class="col-lg-4">
 										<div class="form-group">
 						                  <label for="fat">Fat</label>
-						                  <input type="number" class="form-control" id="fat" name="fat" placeholder="Fat">
+						                  <input type="number" class="form-control" id="fat" name="fat" placeholder="Fat" value="{{ food.fats }}">
 						                </div>
 									</div>
 
 									<div class="col-lg-4">
 										<div class="form-group">
 											<label style="visibility:hidden">submit</label>
+											<input type="hidden" name="food-id" value={{ food.id}} >
 											<button type="submit" class="btn btn-primary btn-block">
-												<i class="glyphicon glyphicon-upload"></i> Submit
+												<i></i> Submit
 											</button>
 										</div>
 									</div>
@@ -106,7 +104,7 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
 							<h4 class="lean-h text-black">
-								<i class="glyphicon glyphicon-th-list"></i> Existing Food Items
+								<i></i> Existing Food Items
 							</h4>
 						</div>
 						<div class="table-responsive">
@@ -123,30 +121,20 @@
 									</tr>
 								</thead>
 								<tbody>
+									{% for food in foods %}
 									<tr>
-										<td>1</td><td>Burger</td><td>20</td>
-										<td>25</td><td>15</th><td>315</td>
+										<td>{{food.id}}</td><td>{{food.name}}</td><td>{{food.proteins}}</td>
+										<td>{{food.carbs}}</td><td>{{food.fats}}</th><td>{{food.calories}}</td>
 										<td>
-											<a href="#" class="btn btn-default btn-xs">
-												<i class="glyphicon glyphicon-pencil"></i> Edit
+											<a href="{{ url_for('main.edit_food', food_id=food.id)}}" class="btn btn-default btn-xs">
+												<i></i> Edit
 											</a> 
-											<a href="#" class="btn btn-danger btn-xs">
-												<i class="glyphicon glyphicon-trash"></i> Delete
+											<a href="{{ url_for('main.delete_food', food_id=food.id)}}" class="btn btn-danger btn-xs">
+												<i></i> Delete
 											</a> 
 										</td>
 									</tr>
-									<tr>
-										<td>1</td><td>Burger</td><td>20</td>
-										<td>25</td><td>15</th><td>315</td>
-										<td>
-											<a href="#" class="btn btn-default btn-xs">
-												<i class="glyphicon glyphicon-pencil"></i> Edit
-											</a> 
-											<a href="#" class="btn btn-danger btn-xs">
-												<i class="glyphicon glyphicon-trash"></i> Delete
-											</a> 
-										</td>
-									</tr>
+									{% endfor%}
 								</tbody>
 							</table>
 						</div>
@@ -165,8 +153,8 @@
 		</div>
 
 		<!-- jQuery -->
-		<script src="./bs/js/jquery.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 		<!-- Bootstrap JavaScript -->
-		<script src="./bs/js/bootstrap.min.js"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 	</body>
 </html>
