@@ -7,13 +7,9 @@ from datetime import datetime
 main = Blueprint('main', __name__)
 
 
-
-
-
 @main.route("/")
 def home():
     return render_template("layout.html")
-
 
 @main.route('/create_log', methods=['POST'])
 def create_log():

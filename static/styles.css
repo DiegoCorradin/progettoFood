@@ -9,7 +9,7 @@ body {
 #homeJumbo {
 	position: relative;
 	min-height: 180px;
-	background: rgba(44, 62, 80, .8);
+	background: rgba(53, 67, 82, 0.8);
 	background-size: cover;
 	background-repeat: no-repeat;
 	border-bottom: 2px solid rgba(44, 62, 80, .8);
@@ -19,7 +19,7 @@ body {
 	position: absolute;
 	height: 183px;
 	width: 100%;
-	background: rgba(44, 62, 80, .8);
+	background: rgba(30, 69, 105, 0.8);
 }
 #homeJumbo h1 {
 	font-size: 30px;

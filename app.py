@@ -62,9 +62,6 @@ def dashboard():
     return render_template("dashboard.html", name=current_user.username, log_dates=log_dates)
 
 
-@app.route('/add', methods=['GET', 'POST'])
-def add():
-    return render_template('add.html')
 
 class LoginForm(FlaskForm):
     username = StringField(
@@ -135,7 +132,7 @@ if __name__ == '__main__':
         db.create_all()
         #db.session.commit()
         
-    app.run(debug=True)
+    app.run(debug=True, port=3000)
     
 
 ## https://www.youtube.com/watch?v=0ROCLcU42Jc&ab_channel=PrettyPrinted, https://www.educative.io/edpresso/how-to-add-data-to-databases-in-flask
